@@ -241,11 +241,11 @@ class Telnet:
 
         """
         if self.debuglevel > 0:
-            print 'Telnet(%s,%s):' % (self.host, self.port),
+            print('Telnet(%s,%s):' % (self.host, self.port), end=' ')
             if args:
-                print msg % args
+                print(msg % args)
             else:
-                print msg
+                print(msg)
 
     def set_debuglevel(self, debuglevel):
         """Set the debug level.
@@ -455,7 +455,7 @@ class Telnet:
         buf = self.cookedq
         self.cookedq = ''
         if not buf and self.eof and not self.rawq:
-            raise EOFError, 'telnet connection closed'
+            raise EOFError('telnet connection closed')
         return buf
 
     def read_sb_data(self):
@@ -596,7 +596,7 @@ class Telnet:
                 try:
                     text = self.read_eager()
                 except EOFError:
-                    print '*** Connection closed by remote host ***'
+                    print('*** Connection closed by remote host ***')
                     break
                 if text:
                     sys.stdout.write(text)
@@ -609,8 +609,8 @@ class Telnet:
 
     def mt_interact(self):
         """Multithreaded version of interact()."""
-        import thread
-        thread.start_new_thread(self.listener, ())
+        import _thread
+        _thread.start_new_thread(self.listener, ())
         while 1:
             line = sys.stdin.readline()
             if not line:
@@ -623,7 +623,7 @@ class Telnet:
             try:
                 data = self.read_eager()
             except EOFError:
-                print '*** Connection closed by remote host ***'
+                print('*** Connection closed by remote host ***')
                 return
             if data:
                 sys.stdout.write(data)
@@ -664,7 +664,7 @@ class Telnet:
         """
         re = None
         expect_list = expect_list[:]
-        indices = range(len(expect_list))
+        indices = list(range(len(expect_list)))
         for i in indices:
             if not hasattr(expect_list[i], "search"):
                 if not re: import re
@@ -728,7 +728,7 @@ class Telnet:
         """
         re = None
         list = list[:]
-        indices = range(len(list))
+        indices = list(range(len(list)))
         for i in indices:
             if not hasattr(list[i], "search"):
                 if not re: import re
